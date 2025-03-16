@@ -1,11 +1,13 @@
 import React from "react";
 import Link from "next/link";
-import { ArrowRight, ChevronRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import Image from "next/image";
 import { TextEffect } from "~/components/ui/text-effect";
 import { AnimatedGroup } from "~/components/ui/animated-group";
 import { HeroHeader } from "~/components/hero5-header";
+import mail2 from "../../public/mail2.png";
+import mail2Light from "../../public/mail2-light.png";
 
 const transitionVariants = {
   item: {
@@ -42,41 +44,6 @@ export default function HeroSection() {
         </div>
         <section>
           <div className="relative pt-24 md:pt-36">
-            <AnimatedGroup
-              variants={{
-                container: {
-                  visible: {
-                    transition: {
-                      delayChildren: 1,
-                    },
-                  },
-                },
-                item: {
-                  hidden: {
-                    opacity: 0,
-                    y: 20,
-                  },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    transition: {
-                      type: "spring",
-                      bounce: 0.3,
-                      duration: 2,
-                    },
-                  },
-                },
-              }}
-              className="absolute inset-0 -z-20"
-            >
-              <Image
-                src="https://res.cloudinary.com/dg4jhba5c/image/upload/v1741605538/night-background_ni3vqb.jpg"
-                alt="background"
-                className="absolute inset-x-0 top-56 -z-20 hidden dark:block lg:top-32"
-                width="3276"
-                height="4095"
-              />
-            </AnimatedGroup>
             <div className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]"></div>
             <div className="mx-auto max-w-7xl px-6">
               <div className="text-center sm:mx-auto lg:mr-auto lg:mt-0">
@@ -86,7 +53,7 @@ export default function HeroSection() {
                     className="group mx-auto flex w-fit items-center gap-4 rounded-full border bg-muted p-1 pl-4 shadow-md shadow-zinc-950/5 transition-colors duration-300 hover:bg-background dark:border-t-white/5 dark:shadow-zinc-950 dark:hover:border-t-border"
                   >
                     <span className="text-sm text-foreground">
-                      Introducing Support for AI Models
+                      Introducing Support for All Major Stock Exchanges
                     </span>
                     <span className="block h-4 w-0.5 border-l bg-white dark:border-background dark:bg-zinc-700"></span>
 
@@ -109,7 +76,7 @@ export default function HeroSection() {
                   as="h1"
                   className="mt-8 text-balance text-6xl md:text-7xl lg:mt-16 xl:text-[5.25rem]"
                 >
-                  Modern Solutions for Customer Engagement
+                  Modern Solution for Managing Your Investments
                 </TextEffect>
                 <TextEffect
                   per="line"
@@ -119,8 +86,9 @@ export default function HeroSection() {
                   as="p"
                   className="mx-auto mt-8 max-w-2xl text-balance text-lg"
                 >
-                  Highly customizable components for building modern websites
-                  and applications that look and feel the way you mean it.
+                  Highly customizable and easy to use investment platform for
+                  your business. Manage your investments with ease and
+                  confidence.
                 </TextEffect>
 
                 <AnimatedGroup
@@ -139,7 +107,7 @@ export default function HeroSection() {
                 >
                   <div
                     key={1}
-                    className="rounded-[calc(var(--radius-xl)+0.125rem)] border bg-foreground/10 p-0.5"
+                    className="rounded-[calc(var(--radius-xl)+0.125rem)] p-0.5"
                   >
                     <Button
                       asChild
@@ -147,21 +115,10 @@ export default function HeroSection() {
                       className="rounded-xl px-5 text-base"
                     >
                       <Link href="#link">
-                        <span className="text-nowrap">Start Building</span>
+                        <span className="text-nowrap">Start Investing</span>
                       </Link>
                     </Button>
                   </div>
-                  <Button
-                    key={2}
-                    asChild
-                    size="lg"
-                    variant="ghost"
-                    className="h-10.5 rounded-xl px-5"
-                  >
-                    <Link href="#link">
-                      <span className="text-nowrap">Request a demo</span>
-                    </Link>
-                  </Button>
                 </AnimatedGroup>
               </div>
             </div>
@@ -187,17 +144,21 @@ export default function HeroSection() {
                 <div className="inset-shadow-2xs dark:inset-shadow-white/20 relative mx-auto max-w-6xl overflow-hidden rounded-2xl border bg-background p-4 shadow-lg shadow-zinc-950/15 ring-1 ring-background">
                   <Image
                     className="aspect-15/8 relative hidden rounded-2xl bg-background dark:block"
-                    src="/mail2.png"
+                    src={mail2}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                    }}
                     alt="app screen"
-                    width="2700"
-                    height="1440"
                   />
                   <Image
                     className="z-2 aspect-15/8 relative rounded-2xl border border-border/25 dark:hidden"
-                    src="/mail2-light.png"
+                    src={mail2Light}
                     alt="app screen"
-                    width="2700"
-                    height="1440"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                    }}
                   />
                 </div>
               </div>
@@ -205,7 +166,7 @@ export default function HeroSection() {
           </div>
         </section>
         <section className="bg-background pb-16 pt-16 md:pb-32">
-          <div className="group relative m-auto max-w-5xl px-6">
+          {/* <div className="group relative m-auto max-w-5xl px-6">
             <div className="absolute inset-0 z-10 flex scale-95 items-center justify-center opacity-0 duration-500 group-hover:scale-100 group-hover:opacity-100">
               <Link
                 href="/"
@@ -218,81 +179,81 @@ export default function HeroSection() {
             </div>
             <div className="group-hover:blur-xs mx-auto mt-12 grid max-w-2xl grid-cols-4 gap-x-12 gap-y-8 transition-all duration-500 group-hover:opacity-50 sm:gap-x-16 sm:gap-y-14">
               <div className="flex">
-                <img
+                <Image
                   className="mx-auto h-5 w-fit dark:invert"
                   src="https://html.tailus.io/blocks/customers/nvidia.svg"
                   alt="Nvidia Logo"
                   height="20"
-                  width="auto"
+                  width="20"
                 />
               </div>
 
               <div className="flex">
-                <img
+                <Image
                   className="mx-auto h-4 w-fit dark:invert"
                   src="https://html.tailus.io/blocks/customers/column.svg"
                   alt="Column Logo"
                   height="16"
-                  width="auto"
+                  width="20"
                 />
               </div>
               <div className="flex">
-                <img
+                <Image
                   className="mx-auto h-4 w-fit dark:invert"
                   src="https://html.tailus.io/blocks/customers/github.svg"
                   alt="GitHub Logo"
                   height="16"
-                  width="auto"
+                  width="20"
                 />
               </div>
               <div className="flex">
-                <img
+                <Image
                   className="mx-auto h-5 w-fit dark:invert"
                   src="https://html.tailus.io/blocks/customers/nike.svg"
                   alt="Nike Logo"
                   height="20"
-                  width="auto"
+                  width="20"
                 />
               </div>
               <div className="flex">
-                <img
+                <Image
                   className="mx-auto h-5 w-fit dark:invert"
                   src="https://html.tailus.io/blocks/customers/lemonsqueezy.svg"
                   alt="Lemon Squeezy Logo"
                   height="20"
-                  width="auto"
+                  width="20"
                 />
               </div>
               <div className="flex">
-                <img
+                <Image
                   className="mx-auto h-4 w-fit dark:invert"
                   src="https://html.tailus.io/blocks/customers/laravel.svg"
                   alt="Laravel Logo"
                   height="16"
-                  width="auto"
+                  width="20"
                 />
               </div>
               <div className="flex">
-                <img
+                <Image
                   className="mx-auto h-7 w-fit dark:invert"
                   src="https://html.tailus.io/blocks/customers/lilly.svg"
                   alt="Lilly Logo"
                   height="28"
-                  width="auto"
+                  width="20"
                 />
               </div>
 
               <div className="flex">
-                <img
+                <Image
                   className="mx-auto h-6 w-fit dark:invert"
                   src="https://html.tailus.io/blocks/customers/openai.svg"
                   alt="OpenAI Logo"
                   height="24"
-                  width="auto"
+                  width="20"
                 />
               </div>
             </div>
-          </div>
+          </div> */}
         </section>
       </main>
     </>
