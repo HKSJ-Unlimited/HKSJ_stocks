@@ -1,14 +1,15 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
+import GitHubProvider from "next-auth/providers/github";
 
-import { db } from "~/server/db";
+import { db } from "@/server/db";
 import {
   accounts,
   sessions,
   users,
   verificationTokens,
-} from "~/server/db/schema";
+} from "@/server/db/schema";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -37,8 +38,17 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authConfig = {
+  session: { strategy: "jwt" },
   providers: [
-    DiscordProvider,
+    DiscordProvider({
+      clientId: process.env.DISCORD_CLIENT_ID,
+      clientSecret: process.env.DISCORD_CLIENT_SECRET,
+    }),
+    GitHubProvider({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+    }),
+
     /**
      * ...add more providers here.
      *
@@ -56,12 +66,24 @@ export const authConfig = {
     verificationTokensTable: verificationTokens,
   }),
   callbacks: {
-    session: ({ session, user }) => ({
+    session: ({ session }) => ({
       ...session,
       user: {
         ...session.user,
-        id: user.id,
       },
     }),
+    authorized({ auth, request: { nextUrl } }) {
+      const isLoggedIn = !!auth?.user;
+      const isOnDashboard = nextUrl.pathname.startsWith("/dashboard");
+      const isOnLogin = nextUrl.pathname.startsWith("/login");
+
+      if (isOnDashboard) {
+        if (isLoggedIn) return true;
+        return Response.redirect(new URL("/login", nextUrl));
+      } else if (isLoggedIn && isOnLogin) {
+        return Response.redirect(new URL("/dashboard", nextUrl));
+      }
+      return true;
+    },
   },
 } satisfies NextAuthConfig;
