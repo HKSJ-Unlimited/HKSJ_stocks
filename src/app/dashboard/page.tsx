@@ -1,12 +1,7 @@
-import Sidebar from "@/components/Sidebar";
-import React from "react";
+import { redirect } from "next/navigation";
 
 function Dashboard() {
-  return (
-    <Sidebar>
-      <div>hello</div>
-    </Sidebar>
-  );
+  redirect("/dashboard/positions");
 }
 
 export default Dashboard;
