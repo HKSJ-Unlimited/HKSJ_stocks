@@ -14,6 +14,7 @@ import React, { useState } from "react";
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { usePathname } from "next/navigation";
 
 const SidebarItems = [
   {
@@ -48,6 +49,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const [expanded, setExpanded] = useState(true);
+  const currentRoute = usePathname();
 
   const { data: session } = useSession();
   if (!session) return null;
@@ -89,7 +91,7 @@ export default function DashboardLayout({
           <Link
             href={item.route}
             key={item.id}
-            className="flex cursor-pointer items-center gap-2 px-4 py-2.5 hover:bg-gray-100"
+            className={`flex cursor-pointer items-center gap-2 px-4 py-2.5 hover:bg-gray-100 ${item.route.includes(currentRoute) ? "bg-gray-100" : ""}`}
           >
             <div>{item.icon}</div>
             <p
