@@ -102,7 +102,7 @@ export default function DashboardLayout({
           </Link>
         ))}
       </nav>
-      <div className="p-2">{children}</div>
+      <div className="p-2 mt-10 flex w-full h-full">{children}</div>
     </div>
   );
 }
