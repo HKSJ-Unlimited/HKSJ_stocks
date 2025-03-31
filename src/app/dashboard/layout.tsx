@@ -15,6 +15,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
+import AddTransaction from "@/components/AddTransaction";
 
 const SidebarItems = [
   {
@@ -102,7 +103,10 @@ export default function DashboardLayout({
           </Link>
         ))}
       </nav>
-      <div className="p-2 mt-10 flex w-full h-full">{children}</div>
+      <div className="p-2 mt-10 flex w-full h-full">
+        {children}
+        <AddTransaction />
+      </div>
     </div>
   );
 }
