@@ -197,8 +197,8 @@ export function TransactionForm() {
                                 <FormLabel>Price per share</FormLabel>
                                 <FormControl>
                                     <div className="flex items-center">
-                                        <p className="absolute mx-1">€</p>
-                                        <Input className="px-4" placeholder="Price" {...field} />
+                                        <p className="absolute mx-1">$</p>
+                                        <Input type="number" className="px-4" placeholder="Price" {...field} />
                                     </div>
                                 </FormControl>
                                 <FormDescription>
@@ -218,10 +218,10 @@ export function TransactionForm() {
                             <FormItem className="flex flex-col">
                                 <FormLabel>Quantity</FormLabel>
                                 <FormControl className="">
-                                    <Input placeholder="Quantity" {...field} />
+                                    <Input type="number" placeholder="Quantity" {...field} />
                                 </FormControl>
                                 <FormDescription>
-                                    This is no of shares you bought.
+                                    This is no of share(s) you bought.
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>
@@ -235,8 +235,8 @@ export function TransactionForm() {
                                 <FormLabel>Fees</FormLabel>
                                 <FormControl>
                                     <div className="flex items-center">
-                                        <p className="absolute mx-1">€</p>
-                                        <Input className="px-4" placeholder="Price" {...field} />
+                                        <p className="absolute mx-1">$</p>
+                                        <Input type="number" className="px-4" placeholder="Price" {...field} />
                                     </div>
                                 </FormControl>
                                 <FormDescription>

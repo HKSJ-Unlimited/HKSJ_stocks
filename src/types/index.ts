@@ -13,10 +13,14 @@ export const IPositions = z.object({
 export const IFormSchema = z.object({
     ticker: z.string(),
     purchaseDate: z.date(),
-    pricePerShare: z.string(),
-    quantity: z.string(),
-    fees: z.string(),
-    notes: z.string().min(5, {
-        message: "Note must be at least 5 characters.",
-    }).optional()
+    pricePerShare: z.string().nonempty({
+        message: "Price cannot be empty"
+    }),
+    quantity: z.string().nonempty({
+        message: "Quantity cannot be empty"
+    }),
+    fees: z.string().nonempty({
+        message: "Fees cannot be empty"
+    }),
+    notes: z.string()
 })
