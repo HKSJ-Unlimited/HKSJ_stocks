@@ -28,7 +28,7 @@ const SidebarItems = [
     id: 2,
     name: "Performance",
     icon: <Gauge />,
-    route: "/dashboard/performance",
+    route: "/dashboard/performance?metric=100",
   },
   {
     id: 3,
@@ -103,7 +103,7 @@ export default function DashboardLayout({
           </Link>
         ))}
       </nav>
-      <div className="p-2 mt-10 flex w-full h-full">
+      <div className="p-2 mt-10 mx-2 flex w-full h-full">
         {children}
         <AddTransaction />
       </div>

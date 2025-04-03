@@ -25,7 +25,7 @@ const data: z.infer<typeof IPositions>[] = [
   }
 ]
 export default function Position() {
-  return <div className="flex-1 flex-col p-2 mx-10">
+  return <div className="flex-1 flex-col">
     <DataTable columns={columns} data={data} />
   </div>;
 }
