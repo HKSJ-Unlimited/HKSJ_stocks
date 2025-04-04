@@ -9,6 +9,16 @@ export const IPositions = z.object({
     fees: z.string(),
     unrealizedGain: z.string(),
 });
+export const ITransactions = z.object({
+    ticker: z.string(),
+    purchasedDate: z.date(),
+    currentShares: z.number(),
+    purchasedShares: z.number(),
+    pricePerShares: z.number(),
+    totalPrice: z.number(),
+    fees: z.number(),
+    notes: z.string(),
+});
 
 export const IFormSchema = z.object({
     ticker: z.string().nonempty({

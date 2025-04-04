@@ -44,9 +44,9 @@ export const SearchStocks = ({ onChange }: {
     }
     async function fetchTickers(query: string) {
         const res = await CallAPI<z.infer<typeof IStocks>>(`/api/stocks?query=${query}`, "GET");
+        console.log(res)
         const result = IStocks.safeParse(res)
         if (result.success) {
-            console.log(result.data)
             setTickers(result.data)
         }
         else {
