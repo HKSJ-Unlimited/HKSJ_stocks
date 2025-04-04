@@ -35,10 +35,10 @@ export const columns: ColumnDef<z.infer<typeof ITransactions>>[] = [
         header: ({ column }) => <DataTableColumnHeader column={column} title="Ticker" />,
     },
     {
-        accessorKey: "purchasedDate",
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Purchased Date" />,
+        accessorKey: "transactionDate",
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Transaction Date" />,
         cell: ({ row }) => {
-            return format(row.original.purchasedDate, "dd/MM/yyyy")
+            return format(row.original.transactionDate, "dd/MM/yyyy")
         }
     },
     {
@@ -46,8 +46,8 @@ export const columns: ColumnDef<z.infer<typeof ITransactions>>[] = [
         header: ({ column }) => <DataTableColumnHeader column={column} title="Current Shares" />,
     },
     {
-        accessorKey: "purchasedShares",
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Purchased Shares" />,
+        accessorKey: "tradedShares",
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Traded Shares" />,
     },
     {
         accessorKey: "pricePerShares",

@@ -7,23 +7,25 @@ import { columns } from "./columns";
 const data: z.infer<typeof ITransactions>[] = [
     {
         ticker: "AAPL",
-        purchasedDate: new Date(),
+        transactionDate: new Date(),
         currentShares: 10,
-        purchasedShares: 10,
+        tradedShares: 10,
         pricePerShares: 100,
         totalPrice: 1000,
         fees: 10,
         notes: "Good stock",
+        type: "buy"
     },
     {
         ticker: "GOOGL",
-        purchasedDate: new Date(),
+        transactionDate: new Date(),
         currentShares: 5,
-        purchasedShares: 5,
+        tradedShares: 5,
         pricePerShares: 300,
         totalPrice: 1500,
         fees: 15,
         notes: "Good stock",
+        type: "sell"
     }
 ]
 export default function Position() {

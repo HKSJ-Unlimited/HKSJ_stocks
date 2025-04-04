@@ -11,13 +11,14 @@ export const IPositions = z.object({
 });
 export const ITransactions = z.object({
     ticker: z.string(),
-    purchasedDate: z.date(),
+    transactionDate: z.date(),
     currentShares: z.number(),
-    purchasedShares: z.number(),
+    tradedShares: z.number(),
     pricePerShares: z.number(),
     totalPrice: z.number(),
     fees: z.number(),
     notes: z.string(),
+    type: z.string()
 });
 
 export const IFormSchema = z.object({
