@@ -1,5 +1,3 @@
-"use client"
-
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { type z } from "zod"
@@ -15,14 +13,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form"
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-    CommandList,
-} from "@/components/ui/command"
+
 import {
     Popover,
     PopoverContent,
@@ -32,64 +23,31 @@ import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 import { IFormSchema } from "@/types"
 import { Textarea } from "./ui/textarea"
-import { useState } from "react"
-import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react"
+import { CalendarIcon, } from "lucide-react"
 import { Input } from "./ui/input"
-
-const tickers = [
-    {
-        value: "AAPL",
-        label: "AAPL",
-    },
-    {
-        value: "GOOGL",
-        label: "GOOGL",
-    },
-    {
-        value: "AMZN",
-        label: "AMZN",
-    },
-    {
-        value: "MSFT",
-        label: "MSFT",
-    },
-    {
-        value: "TSLA",
-        label: "TSLA",
-    },
-    {
-        value: "META",
-        label: "META",
-    },
-    {
-        value: "NFLX",
-        label: "NFLX",
-    },
-
-]
+import { SearchStocks } from "./SearchStocks"
 
 export function TransactionForm() {
     const form = useForm<z.infer<typeof IFormSchema>>({
         resolver: zodResolver(IFormSchema),
         defaultValues: {
             notes: "",
-            fees: "0",
-            pricePerShare: "",
-            quantity: "1",
+            fees: 0,
+            pricePerShare: 0,
+            quantity: 1,
             ticker: '',
             purchaseDate: new Date()
         },
     })
-    const [open, setOpen] = useState(false)
-    const [value, setValue] = useState("")
+
 
     function onSubmit(values: z.infer<typeof IFormSchema>) {
         console.log(values)
     }
+
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-
                 <FormField
                     control={form.control}
                     name="ticker"
@@ -97,50 +55,7 @@ export function TransactionForm() {
                         <FormItem className="flex flex-col">
                             <FormLabel>Ticker</FormLabel>
                             <FormControl>
-                                <Popover open={open} onOpenChange={setOpen}>
-                                    <PopoverTrigger asChild>
-                                        <Button
-                                            variant="outline"
-                                            role="combobox"
-                                            aria-expanded={open}
-                                            className="justify-between"
-                                        >
-                                            {value
-                                                ? tickers.find((ticker) => ticker.value === value)?.label
-                                                : "Select a ticker..."}
-                                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                        </Button>
-                                    </PopoverTrigger>
-                                    <PopoverContent className="flex-1 min-w-[400px] p-0">
-                                        <Command>
-                                            <CommandInput placeholder="Search a ticker..." />
-                                            <CommandList>
-                                                <CommandEmpty>No ticker found.</CommandEmpty>
-                                                <CommandGroup>
-                                                    {tickers.map((ticker) => (
-                                                        <CommandItem
-                                                            key={ticker.value}
-                                                            value={ticker.value}
-                                                            onSelect={(currentValue) => {
-                                                                setValue(currentValue === value ? "" : currentValue)
-                                                                setOpen(false)
-                                                                field.onChange(currentValue)
-                                                            }}
-                                                        >
-                                                            <Check
-                                                                className={cn(
-                                                                    "mr-2 h-4 w-4",
-                                                                    value === ticker.value ? "opacity-100" : "opacity-0"
-                                                                )}
-                                                            />
-                                                            {ticker.label}
-                                                        </CommandItem>
-                                                    ))}
-                                                </CommandGroup>
-                                            </CommandList>
-                                        </Command>
-                                    </PopoverContent>
-                                </Popover>
+                                <SearchStocks onChange={field.onChange} />
                             </FormControl>
                             <FormDescription>
                                 Search by ticker, name or ISIN.
@@ -198,7 +113,13 @@ export function TransactionForm() {
                                 <FormControl>
                                     <div className="flex items-center">
                                         <p className="absolute mx-1">$</p>
-                                        <Input type="number" className="px-4" placeholder="Price" {...field} />
+                                        <Input type="number" className="px-4" placeholder="Price"
+                                            value={field.value}
+                                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                                field.onChange(Number(e.target.value));
+                                            }}
+
+                                        />
                                     </div>
                                 </FormControl>
                                 <FormDescription>
@@ -218,7 +139,10 @@ export function TransactionForm() {
                             <FormItem className="flex flex-col">
                                 <FormLabel>Quantity</FormLabel>
                                 <FormControl className="">
-                                    <Input type="number" placeholder="Quantity" {...field} />
+                                    <Input type="number" placeholder="Quantity" value={field.value}
+                                        onChange={(e) => {
+                                            field.onChange(Number(e.target.value))
+                                        }} />
                                 </FormControl>
                                 <FormDescription>
                                     This is no of share(s) you bought.
@@ -236,7 +160,10 @@ export function TransactionForm() {
                                 <FormControl>
                                     <div className="flex items-center">
                                         <p className="absolute mx-1">$</p>
-                                        <Input type="number" className="px-4" placeholder="Price" {...field} />
+                                        <Input type="number" className="px-4" placeholder="Price" value={field.value}
+                                            onChange={(e) => {
+                                                field.onChange(Number(e.target.value))
+                                            }} />
                                     </div>
                                 </FormControl>
                                 <FormDescription>

@@ -11,16 +11,37 @@ export const IPositions = z.object({
 });
 
 export const IFormSchema = z.object({
-    ticker: z.string(),
+    ticker: z.string().nonempty({
+        message: "Select a Ticker"
+    }),
     purchaseDate: z.date(),
-    pricePerShare: z.string().nonempty({
-        message: "Price cannot be empty"
+    pricePerShare: z.number().gt(0, ({
+        message: "Price cannot be 0"
+    })),
+    quantity: z.number().nonnegative({
+        message: "Quantity cannot be negative"
     }),
-    quantity: z.string().nonempty({
-        message: "Quantity cannot be empty"
-    }),
-    fees: z.string().nonempty({
-        message: "Fees cannot be empty"
+    fees: z.number().nonnegative({
+        message: "Fees cannot be negative"
     }),
     notes: z.string()
 })
+
+export const IStocks = z.array(z.object(
+    {
+        exchange: z.string(),
+        shortname: z.string(),
+        quoteType: z.string(),
+        symbol: z.string(),
+        index: z.string(),
+        score: z.number(),
+        typeDisp: z.string(),
+        longname: z.string(),
+        exchDisp: z.string(),
+        sector: z.string(),
+        sectorDisp: z.string(),
+        industry: z.string(),
+        industryDisp: z.string(),
+        isYahooFinance: z.boolean()
+    }
+))
