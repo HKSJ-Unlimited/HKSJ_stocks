@@ -1,5 +1,6 @@
 import { relations, sql } from "drizzle-orm";
 import {
+  decimal,
   index,
   integer,
   pgTableCreator,
@@ -127,3 +128,23 @@ export const verificationTokens = createTable(
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
   })
 );
+
+export const transactions = createTable("transactions", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  ticker: varchar("ticker", { length: 255 }).notNull(),
+  date: timestamp("date", {
+    mode: "date",
+    withTimezone: true
+  }).notNull(),
+  quantity: integer("quantity").notNull(),
+  pricePerShare: decimal("price_per_share", { precision: 10, scale: 2 }).notNull(),
+  fees: decimal("fees", { precision: 10, scale: 2 }).notNull(),
+  notes: text("notes").notNull(),
+  type: varchar("type", { length: 10 }).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id)
+});
+export const transactionRelation = relations(transactions, ({ one }) => ({
+  user: one(users, { fields: [transactions.userId], references: [users.id] }),
+}));
