@@ -70,14 +70,16 @@ export const authConfig = {
     verificationTokensTable: verificationTokens,
   }),
   callbacks: {
-    session: ({ session }) => ({
+    session: ({ session, token }) => ({
       ...session,
       user: {
         ...session.user,
+        id: token.sub
       },
     }),
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
+      console.log("auth?.user.id", auth?.user);
       const isOnDashboard = nextUrl.pathname.startsWith("/dashboard");
       const isOnLogin = nextUrl.pathname.startsWith("/login");
 
