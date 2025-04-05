@@ -11,6 +11,8 @@ import {
 import { IFormSchema } from "@/types"
 import { Form } from "./ui/form"
 import { BaseForm } from "./BaseFormContent"
+import { addTransaction } from "@/actions/transactions"
+
 
 
 export function TransactionForm() {
@@ -22,12 +24,18 @@ export function TransactionForm() {
             pricePerShare: 0,
             quantity: 1,
             ticker: '',
-            purchaseDate: new Date(),
+            date: new Date(),
             type: 'buy',
         },
     })
-    function onSubmit(values: z.infer<typeof IFormSchema>) {
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof IFormSchema>) {
+        try {
+            await addTransaction(values);
+            form.reset();
+        }
+        catch (error) {
+            console.log(error)
+        }
     }
 
     return (

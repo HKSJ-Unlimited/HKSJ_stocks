@@ -26,7 +26,7 @@ import { type UseFormReturn } from "react-hook-form"
 type Props = {
     form: UseFormReturn<{
         ticker: string;
-        purchaseDate: Date;
+        date: Date;
         pricePerShare: number;
         quantity: number;
         fees: number;
@@ -57,7 +57,7 @@ export const BaseForm = ({ form, type }: Props) => {
             <div className="flex items-center justify-between">
                 <FormField
                     control={form.control}
-                    name="purchaseDate"
+                    name="date"
                     render={({ field }) => (
                         <FormItem className="flex flex-col">
                             <FormLabel>

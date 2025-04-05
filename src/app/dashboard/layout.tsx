@@ -53,7 +53,7 @@ export default function DashboardLayout({
   const currentRoute = usePathname();
 
   const { data: session } = useSession();
-  if (!session) return null;
+  if (!session?.user) return null;
   const {
     user: { image, name },
   } = session;
