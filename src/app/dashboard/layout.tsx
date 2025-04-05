@@ -28,7 +28,7 @@ const SidebarItems = [
     id: 2,
     name: "Performance",
     icon: <Gauge />,
-    route: "/dashboard/performance?metric=100",
+    route: "/dashboard/performance?metric=1",
   },
   {
     id: 3,
