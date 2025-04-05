@@ -25,7 +25,7 @@ export const IFormSchema = z.object({
     ticker: z.string().nonempty({
         message: "Select a Ticker"
     }),
-    purchaseDate: z.date(),
+    date: z.date(),
     pricePerShare: z.number().gt(0, ({
         message: "Price cannot be 0"
     })),
