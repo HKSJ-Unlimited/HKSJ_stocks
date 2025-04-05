@@ -35,7 +35,8 @@ export const IFormSchema = z.object({
     fees: z.number().nonnegative({
         message: "Fees cannot be negative"
     }),
-    notes: z.string()
+    notes: z.string(),
+    type: z.enum(['buy', 'sell']).default('buy'),
 })
 
 export const IStocks = z.array(z.object(
