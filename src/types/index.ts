@@ -14,9 +14,9 @@ export const ITransactions = z.object({
     transactionDate: z.date(),
     currentShares: z.number(),
     tradedShares: z.number(),
-    pricePerShares: z.number(),
-    totalPrice: z.number(),
-    fees: z.number(),
+    pricePerShare: z.string(),
+    totalPrice: z.string(),
+    fees: z.string(),
     notes: z.string(),
     type: z.string()
 });

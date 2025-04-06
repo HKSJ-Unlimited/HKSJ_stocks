@@ -8,9 +8,9 @@ import {
   text,
   timestamp,
   varchar,
+  pgView
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
-
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
  * database instance for multiple projects.
@@ -148,3 +148,17 @@ export const transactions = createTable("transactions", {
 export const transactionRelation = relations(transactions, ({ one }) => ({
   user: one(users, { fields: [transactions.userId], references: [users.id] }),
 }));
+
+export const userTransactionHistory = pgView('user_transaction_history', {
+  id: integer('id').notNull(),
+  userId: varchar("user_id", { length: 255 }).notNull(),
+  ticker: varchar('ticker', { length: 255 }).notNull(),
+  transactionDate: timestamp('transaction_date', { withTimezone: true }).notNull(),
+  tradedShares: integer('traded_shares').notNull(),
+  pricePerShare: decimal('price_per_share').notNull(),
+  totalPrice: decimal('total_price').notNull(),
+  fees: decimal('fees').notNull(),
+  notes: text('notes').notNull(),
+  currentShares: integer('current_shares').notNull(),
+  type: varchar('type', { length: 255 }).notNull(),
+}).existing()
