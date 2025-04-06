@@ -50,7 +50,7 @@ export const columns: ColumnDef<z.infer<typeof ITransactions>>[] = [
         header: ({ column }) => <DataTableColumnHeader column={column} title="Traded Shares" />,
     },
     {
-        accessorKey: "pricePerShares",
+        accessorKey: "pricePerShare",
         header: ({ column }) => <DataTableColumnHeader column={column} title="Price Per Share" />,
     },
     {
