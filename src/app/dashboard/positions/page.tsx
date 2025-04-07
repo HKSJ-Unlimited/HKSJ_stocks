@@ -3,29 +3,19 @@ import React from "react";
 import { columns } from "./columns";
 import { type IPositions } from "@/types"
 import { type z } from "zod";
+import { auth } from "@/server/auth";
+import { CallAPI } from "@/lib/Client";
 
-const data: z.infer<typeof IPositions>[] = [
-  {
-    ticker: "AAPL",
-    daysGain: "+1.5%",
-    shares: "10",
-    invested: "$1000",
-    marketValue: "$1200",
-    fees: "$10",
-    unrealizedGain: "$200",
-  },
-  {
-    ticker: "GOOGL",
-    daysGain: "-0.5%",
-    shares: "5",
-    invested: "$1500",
-    marketValue: "$1400",
-    fees: "$15",
-    unrealizedGain: "-$100",
+export default async function Position() {
+  const session = await auth()
+  const userId = session?.user.id
+
+  if (!userId) {
+    return <div className="flex-1 flex-col">No data</div>;
   }
-]
-export default function Position() {
+  const res = await CallAPI<z.infer<typeof IPositions>[]>(`http:localhost:3000/api/position?userId=${userId}`, "GET")
+
   return <div className="flex-1 flex-col">
-    <DataTable columns={columns} data={data} />
+    <DataTable columns={columns} data={res} />
   </div>;
 }
