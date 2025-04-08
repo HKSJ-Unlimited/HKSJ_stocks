@@ -4,6 +4,7 @@ import {
     type ColumnDef,
     flexRender,
     getCoreRowModel,
+    type RowSelectionState,
     useReactTable,
     type VisibilityState,
 } from "@tanstack/react-table"
@@ -24,27 +25,40 @@ import { DataTableViewOptions } from "./ColVisibilty"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
-    data: TData[]
+    data: TData[],
+    action?:
+    (selectedRows: TData[], setTableData: React.Dispatch<React.SetStateAction<TData[]>>, setRowSelection: () => void)
+        => React.ReactNode
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
+    action,
 }: DataTableProps<TData, TValue>) {
+    const [rowSelection, setRowSelection] = React.useState<RowSelectionState>({});
+    const [tableData, setTableData] = React.useState<TData[]>(data);
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({})
     const table = useReactTable({
-        data,
+        data: tableData,
         columns,
         getCoreRowModel: getCoreRowModel(),
         onColumnVisibilityChange: setColumnVisibility,
+        onRowSelectionChange: setRowSelection,
+        enableRowSelection: true,
         state: {
             columnVisibility,
-        }
-    })
+            rowSelection,
+        },
+    });
+
     return (
         <>
             <DataTableViewOptions table={table} />
+            {action?.(
+                table.getSelectedRowModel().rows.map((row) => row.original)
+                , setTableData, () => setRowSelection({}))}
             <div className="rounded-md border mb-2">
                 <Table>
                     <TableHeader>
@@ -67,7 +81,8 @@ export function DataTable<TData, TValue>({
                     </TableHeader>
                     <TableBody>
                         {table.getRowModel().rows?.length ? (
-                            table.getRowModel().rows.map((row) => (
+                            table.getRowModel().rows.map((row) =>
+                            (
                                 <TableRow
                                     key={row.id}
                                     data-state={row.getIsSelected() && "selected"}
@@ -78,7 +93,8 @@ export function DataTable<TData, TValue>({
                                         </TableCell>
                                     ))}
                                 </TableRow>
-                            ))
+                            )
+                            )
                         ) : (
                             <TableRow>
                                 <TableCell colSpan={columns.length} className="h-24 text-center">

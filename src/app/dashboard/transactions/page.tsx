@@ -1,10 +1,9 @@
-import { DataTable } from "@/components/table/Table";
 import React from "react";
-import { columns } from "./columns";
 import { db } from "@/server/db";
 import { userTransactionHistory } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
 import { auth } from "@/server/auth";
+import TransactionsTableContainer from "./table";
 
 export default async function Position() {
     const session = await auth();
@@ -14,7 +13,7 @@ export default async function Position() {
         .from(userTransactionHistory)
         .where(eq(userTransactionHistory.userId, session.user.id));
 
-    return <div className="flex-1 flex-col">
-        <DataTable columns={columns} data={history} />
-    </div>;
+    return (
+        <TransactionsTableContainer data={history} />
+    )
 }

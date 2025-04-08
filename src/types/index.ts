@@ -10,6 +10,7 @@ export const IPositions = z.object({
     unrealizedGain: z.string(),
 });
 export const ITransactions = z.object({
+    id: z.number(),
     ticker: z.string(),
     transactionDate: z.date(),
     currentShares: z.number(),
