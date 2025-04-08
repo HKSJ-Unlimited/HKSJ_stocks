@@ -13,9 +13,12 @@ import { Form } from "./ui/form"
 import { BaseForm } from "./BaseFormContent"
 import { addTransaction } from "@/actions/transactions"
 
+import { useRouter } from 'next/navigation'
+
 
 
 export function TransactionForm() {
+    const router = useRouter()
     const form = useForm<z.infer<typeof IFormSchema>>({
         resolver: zodResolver(IFormSchema),
         defaultValues: {
@@ -32,6 +35,7 @@ export function TransactionForm() {
         try {
             await addTransaction(values);
             form.reset();
+            router.refresh()
         }
         catch (error) {
             console.log(error)

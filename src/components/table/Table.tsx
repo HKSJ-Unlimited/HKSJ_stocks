@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/table"
 
 import { DataTablePagination } from "./Pagination"
-import React from "react"
+import React, { useEffect } from "react"
 import { DataTableViewOptions } from "./ColVisibilty"
 
 interface DataTableProps<TData, TValue> {
@@ -52,6 +52,9 @@ export function DataTable<TData, TValue>({
             rowSelection,
         },
     });
+    useEffect(() => {
+        setTableData(data)
+    }, [data])
 
     return (
         <>

@@ -14,7 +14,6 @@ export default async function Position() {
     return <div className="flex-1 flex-col">No data</div>;
   }
   const res = await CallAPI<z.infer<typeof IPositions>[]>(`http:localhost:3000/api/position?userId=${userId}`, "GET")
-
   return <div className="flex-1 flex-col">
     <DataTable columns={columns} data={res} />
   </div>;
