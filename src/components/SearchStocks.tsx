@@ -25,10 +25,10 @@ import { CallAPI } from "@/lib/Client"
 import Spinner from "./Spinner"
 
 export const SearchStocks = ({ onChange }: {
-    onChange: (value: string) => void
+    onChange: (value: { symbol: string, exchDisp: string, shortname: string }) => void
 }) => {
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState<{ symbol: string, exchDisp: string, shortname: string } | null>(null);
     const [tickers, setTickers] = useState<z.infer<typeof IStocks>>([])
     const [searchValue, setSearchValue] = useState("");
     const [loading, setLoading] = useState(false)
@@ -64,7 +64,9 @@ export const SearchStocks = ({ onChange }: {
                     aria-expanded={open}
                     className="justify-between"
                 >
-                    {value ?? "Select a ticker"}
+                    {value
+                        ? `${value.shortname} (${value.symbol}) - ${value.exchDisp}`
+                        : "Select a ticker"}
                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
@@ -77,25 +79,33 @@ export const SearchStocks = ({ onChange }: {
                             }
                         </CommandEmpty>
                         <CommandGroup>
-                            {tickers.map((ticker) => (
-                                <CommandItem
-                                    key={ticker.symbol}
-                                    value={`${ticker.symbol} - (${ticker.exchDisp})`}
-                                    onSelect={(currentValue) => {
-                                        setValue(currentValue === value ? "" : currentValue)
-                                        setOpen(false)
-                                        onChange(currentValue.split(" - ")[0] ?? "")
-                                    }}
-                                >
-                                    <Check
-                                        className={cn(
-                                            "mr-2 h-4 w-4",
-                                            value === `${ticker.symbol} - (${ticker.exchDisp})` ? "opacity-100" : "opacity-0"
-                                        )}
-                                    />
-                                    {ticker.longname} ({ticker.symbol}) - {ticker.exchDisp}
-                                </CommandItem>
-                            ))}
+                            {tickers.map((ticker) => {
+                                return (
+                                    <CommandItem
+                                        key={ticker.symbol}
+                                        value={ticker.symbol}
+                                        onSelect={() => {
+                                            const selected = {
+                                                symbol: ticker.symbol,
+                                                exchDisp: ticker.exchDisp,
+                                                shortname: ticker.shortname,
+                                            };
+                                            setValue(selected);
+                                            setOpen(false);
+                                            onChange(selected);
+                                        }}
+                                    >
+                                        <Check
+                                            className={cn(
+                                                "mr-2 h-4 w-4",
+                                                value?.symbol === ticker.symbol ? "opacity-100" : "opacity-0"
+                                            )}
+                                        />
+                                        {ticker.shortname} ({ticker.symbol}) - {ticker.exchDisp}
+                                    </CommandItem>
+                                )
+                            }
+                            )}
                         </CommandGroup>
                     </CommandList>
                 </Command>

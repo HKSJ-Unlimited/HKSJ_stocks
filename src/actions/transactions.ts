@@ -14,10 +14,12 @@ export async function addTransaction(data: z.infer<typeof IFormSchema>) {
     if (!session?.user) throw new Error("User not authenticated");
 
     const userId = session.user.id;
-
+    console.log("Transaction Data:", data);
     await db.insert(transactions).values({
         userId: userId,
-        ticker: data.ticker,
+        ticker: data.ticker.symbol,
+        exchDisp: data.ticker.exchDisp,
+        shortname: data.ticker.shortname,
         date: data.date,
         quantity: data.quantity,
         pricePerShare: data.pricePerShare.toString(),

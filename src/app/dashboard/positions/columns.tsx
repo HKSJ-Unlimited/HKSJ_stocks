@@ -9,6 +9,14 @@ export const columns: ColumnDef<z.infer<typeof IPositions>>[] = [
     {
         accessorKey: "ticker",
         header: ({ column }) => <DataTableColumnHeader column={column} title="Ticker" />,
+        cell: ({ row }) => (
+            <div className="flex items-center space-x-2">
+                <div className="flex flex-col">
+                    <span className="text-sm font-medium">{row.original.ticker.symbol}.{row.original.ticker.exchDisp}</span>
+                    <span className="text-xs text-muted-foreground">{row.original.ticker.shortname}</span>
+                </div>
+            </div>
+        )
     },
     {
         accessorKey: "daysGain",

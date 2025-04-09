@@ -26,7 +26,11 @@ export function TransactionForm() {
             fees: 0,
             pricePerShare: 0,
             quantity: 1,
-            ticker: '',
+            ticker: {
+                exchDisp: '',
+                shortname: '',
+                symbol: ''
+            },
             date: new Date(),
             type: 'buy',
         },

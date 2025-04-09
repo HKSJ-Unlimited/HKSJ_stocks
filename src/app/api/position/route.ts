@@ -71,13 +71,17 @@ export async function GET(req: NextRequest) {
                 const unrealizedGain = marketValue - invested;
 
                 res.push({
-                    ticker: tx,
-                    daysGain: daysGain > 0 ? '+' + daysGain.toFixed(2) + ' %' : '-' + daysGain.toFixed(2) + '%',
+                    ticker: {
+                        symbol: tx,
+                        shortname: userTransactions.find(item => item.ticker === tx)?.shortname ?? '',
+                        exchDisp: userTransactions.find(item => item.ticker === tx)?.exchDisp ?? ''
+                    },
+                    daysGain: daysGain > 0 ? '+' + daysGain.toFixed(2) + ' %' : daysGain.toFixed(2) + '%',
                     shares: totalSharesHeld.toString(),
-                    invested: `${invested.toFixed(2)}`,
-                    marketValue: `${marketValue.toFixed(2)}`,
-                    fees: `${totalFees.toFixed(2)}`,
-                    unrealizedGain: `${unrealizedGain.toFixed(2)}`
+                    invested: `${invested.toFixed(2)}$`,
+                    marketValue: `${marketValue.toFixed(2)}$`,
+                    fees: `${totalFees.toFixed(2)}$`,
+                    unrealizedGain: `${unrealizedGain.toFixed(2)}$`
                 })
             }
 

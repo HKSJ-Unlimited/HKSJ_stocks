@@ -1,7 +1,11 @@
 import { z } from "zod"
 
 export const IPositions = z.object({
-    ticker: z.string(),
+    ticker: z.object({
+        symbol: z.string(),
+        shortname: z.string(),
+        exchDisp: z.string(),
+    }),
     daysGain: z.string(),
     shares: z.string(),
     invested: z.string(),
@@ -23,8 +27,10 @@ export const ITransactions = z.object({
 });
 
 export const IFormSchema = z.object({
-    ticker: z.string().nonempty({
-        message: "Select a Ticker"
+    ticker: z.object({
+        symbol: z.string(),
+        shortname: z.string(),
+        exchDisp: z.string(),
     }),
     date: z.date(),
     pricePerShare: z.number().gt(0, ({
@@ -47,14 +53,14 @@ export const IStocks = z.array(z.object(
         quoteType: z.string(),
         symbol: z.string(),
         index: z.string(),
-        score: z.number(),
+        score: z.number().optional(),
         typeDisp: z.string(),
-        longname: z.string(),
+        longname: z.string().optional(),
         exchDisp: z.string(),
-        sector: z.string(),
-        sectorDisp: z.string(),
-        industry: z.string(),
-        industryDisp: z.string(),
-        isYahooFinance: z.boolean()
+        sector: z.string().optional(),
+        sectorDisp: z.string().optional(),
+        industry: z.string().optional(),
+        industryDisp: z.string().optional(),
+        isYahooFinance: z.boolean().optional()
     }
 ))

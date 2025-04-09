@@ -25,7 +25,11 @@ import { type UseFormReturn } from "react-hook-form"
 
 type Props = {
     form: UseFormReturn<{
-        ticker: string;
+        ticker: {
+            symbol: string;
+            shortname: string;
+            exchDisp: string;
+        };
         date: Date;
         pricePerShare: number;
         quantity: number;
