@@ -132,6 +132,8 @@ export const verificationTokens = createTable(
 export const transactions = createTable("transactions", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
   ticker: varchar("ticker", { length: 255 }).notNull(),
+  exchDisp: varchar("exch_disp", { length: 255 }).notNull(),
+  shortname: varchar("shortname", { length: 255 }).notNull(),
   date: timestamp("date", {
     mode: "date",
     withTimezone: true
