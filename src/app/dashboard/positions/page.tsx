@@ -6,6 +6,7 @@ import { type z } from "zod";
 import { auth } from "@/server/auth";
 import { CallAPI } from "@/lib/Client";
 import PositionLoader from "@/components/Skeletons/PositionLoader";
+import { env } from "@/env";
 
 export default async function Position() {
   const session = await auth()
@@ -14,7 +15,7 @@ export default async function Position() {
   if (!userId) {
     return <div className="flex-1 flex-col">No data</div>;
   }
-  const res = await CallAPI<z.infer<typeof IPositions>[]>(`http:localhost:3000/api/position?userId=${userId}`, "GET")
+  const res = await CallAPI<z.infer<typeof IPositions>[]>(`${env.BASE_URL}/api/position?userId=${userId}`, "GET")
   return <div className="flex-1 flex-col">
     <Suspense fallback={<PositionLoader />}>
       <DataTable columns={columns} data={res} />
