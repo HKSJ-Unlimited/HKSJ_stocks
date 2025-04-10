@@ -77,12 +77,12 @@ export async function GET(req: NextRequest) {
                         shortname: userTransactions.find(item => item.ticker === tx)?.shortname ?? '',
                         exchDisp: userTransactions.find(item => item.ticker === tx)?.exchDisp ?? ''
                     },
-                    daysGain: daysGain > 0 ? '+' + daysGain.toFixed(2) + ' %' : daysGain.toFixed(2) + '%',
-                    shares: totalSharesHeld.toString(),
-                    invested: `${invested.toFixed(2)}$`,
-                    marketValue: `${marketValue.toFixed(2)}$`,
-                    fees: `${totalFees.toFixed(2)}$`,
-                    unrealizedGain: `${unrealizedGain.toFixed(2)}$`
+                    daysGain: Number(daysGain.toFixed(2)),
+                    shares: Number(totalSharesHeld.toFixed(2)),
+                    invested: Number(invested.toFixed(2)),
+                    marketValue: Number(marketValue.toFixed(2)),
+                    fees: Number(totalFees.toFixed(2)),
+                    unrealizedGain: Number(unrealizedGain.toFixed(2))
                 })
             }
 

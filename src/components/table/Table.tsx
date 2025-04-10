@@ -4,7 +4,9 @@ import {
     type ColumnDef,
     flexRender,
     getCoreRowModel,
+    getSortedRowModel,
     type RowSelectionState,
+    type SortingState,
     useReactTable,
     type VisibilityState,
 } from "@tanstack/react-table"
@@ -39,7 +41,8 @@ export function DataTable<TData, TValue>({
     const [rowSelection, setRowSelection] = React.useState<RowSelectionState>({});
     const [tableData, setTableData] = React.useState<TData[]>(data);
     const [columnVisibility, setColumnVisibility] =
-        React.useState<VisibilityState>({})
+        React.useState<VisibilityState>({});
+    const [sorting, setSorting] = React.useState<SortingState>([])
     const table = useReactTable({
         data: tableData,
         columns,
@@ -47,9 +50,12 @@ export function DataTable<TData, TValue>({
         onColumnVisibilityChange: setColumnVisibility,
         onRowSelectionChange: setRowSelection,
         enableRowSelection: true,
+        onSortingChange: setSorting,
+        getSortedRowModel: getSortedRowModel(),
         state: {
             columnVisibility,
             rowSelection,
+            sorting
         },
     });
     useEffect(() => {

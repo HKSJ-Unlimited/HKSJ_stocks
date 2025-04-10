@@ -33,6 +33,7 @@ export const columns: ColumnDef<z.infer<typeof ITransactions>>[] = [
     {
         accessorKey: "ticker",
         header: ({ column }) => <DataTableColumnHeader column={column} title="Ticker" />,
+        enableSorting: false,
     },
     {
         accessorKey: "transactionDate",

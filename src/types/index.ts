@@ -6,12 +6,12 @@ export const IPositions = z.object({
         shortname: z.string(),
         exchDisp: z.string(),
     }),
-    daysGain: z.string(),
-    shares: z.string(),
-    invested: z.string(),
-    marketValue: z.string(),
-    fees: z.string(),
-    unrealizedGain: z.string(),
+    daysGain: z.number(),
+    shares: z.number(),
+    invested: z.number(),
+    marketValue: z.number(),
+    fees: z.number(),
+    unrealizedGain: z.number(),
 });
 export const ITransactions = z.object({
     id: z.number(),

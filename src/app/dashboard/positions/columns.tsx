@@ -9,6 +9,7 @@ export const columns: ColumnDef<z.infer<typeof IPositions>>[] = [
     {
         accessorKey: "ticker",
         header: ({ column }) => <DataTableColumnHeader column={column} title="Ticker" />,
+        enableSorting: false,
         cell: ({ row }) => (
             <div className="flex items-center space-x-2">
                 <div className="flex flex-col">
@@ -23,8 +24,8 @@ export const columns: ColumnDef<z.infer<typeof IPositions>>[] = [
         header: ({ column }) => <DataTableColumnHeader column={column} title="Days Gain" />,
         cell: ({ row }) => {
             const gain = row.original.daysGain
-            return <span className={parseInt(gain) > 0 ?
-                "text-green-400 font-bold" : "text-red-400 font-bold"}>{gain}</span>
+            return <span className={gain > 0 ?
+                "text-green-400 font-bold" : "text-red-400 font-bold"}>{gain} %</span>
         }
     },
     {
@@ -34,22 +35,34 @@ export const columns: ColumnDef<z.infer<typeof IPositions>>[] = [
     {
         accessorKey: "invested",
         header: ({ column }) => <DataTableColumnHeader column={column} title="Invested" />,
+        cell: ({ row }) => {
+            const invested = row.original.invested
+            return <span>{invested}$</span>
+        }
     },
     {
         accessorKey: "marketValue",
         header: ({ column }) => <DataTableColumnHeader column={column} title="Market Value" />,
+        cell: ({ row }) => {
+            const marketValue = row.original.marketValue
+            return <span>{marketValue}$</span>
+        }
     },
     {
         accessorKey: "fees",
         header: ({ column }) => <DataTableColumnHeader column={column} title="Fees" />,
+        cell: ({ row }) => {
+            const fees = row.original.fees
+            return <span>{fees}$</span>
+        }
     },
     {
         accessorKey: "unrealizedGain",
         header: ({ column }) => <DataTableColumnHeader column={column} title="Unrealized Gain" />,
         cell: ({ row }) => {
             const gain = row.original.unrealizedGain
-            return <span className={parseInt(gain) > 0 ?
-                "text-green-400 font-bold" : "text-red-400 font-bold"}>{gain}</span>
+            return <span className={gain > 0 ?
+                "text-green-400 font-bold" : "text-red-400 font-bold"}>{gain}$</span>
         }
     }
 
