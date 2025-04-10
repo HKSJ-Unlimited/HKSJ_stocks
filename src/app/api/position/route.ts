@@ -61,6 +61,7 @@ export async function GET(req: NextRequest) {
             })
 
             const { regularMarketPrice: currentPrice } = await yahooFinance.quote(tx);
+            console.log("Current Price:", currentPrice, "Ticker:", tx)
             if (currentPrice) {
                 const daysGain = avgBuyPrice > 0 ? ((currentPrice - avgBuyPrice) / avgBuyPrice) * 100 : 0
 
