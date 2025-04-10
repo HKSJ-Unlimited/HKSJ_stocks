@@ -14,8 +14,7 @@ import { BaseForm } from "./BaseFormContent"
 import { addTransaction } from "@/actions/transactions"
 
 import { useRouter } from 'next/navigation'
-
-
+import { useToast } from "@/hooks/use-toast"
 
 export function TransactionForm() {
     const router = useRouter()
@@ -35,9 +34,14 @@ export function TransactionForm() {
             type: 'buy',
         },
     })
+    const { toast } = useToast()
     async function onSubmit(values: z.infer<typeof IFormSchema>) {
         try {
             await addTransaction(values);
+            toast({
+                title: "Added: Transaction",
+                description: `Ticker: ${values.ticker.symbol}, Type: ${values.type}`,
+            })
             form.reset();
             router.refresh()
         }
@@ -61,7 +65,6 @@ export function TransactionForm() {
                         <BaseForm form={form} type="sell" />
                     </TabsContent>
                 </Tabs>
-
             </form>
         </Form>
     )

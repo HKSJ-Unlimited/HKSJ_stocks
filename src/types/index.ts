@@ -28,9 +28,9 @@ export const ITransactions = z.object({
 
 export const IFormSchema = z.object({
     ticker: z.object({
-        symbol: z.string(),
-        shortname: z.string(),
-        exchDisp: z.string(),
+        symbol: z.string().nonempty({ message: "Ticker cannot be empty" }),
+        shortname: z.string().nonempty({ message: "Ticker cannot be empty" }),
+        exchDisp: z.string().nonempty({ message: "Ticker cannot be empty" }),
     }),
     date: z.date(),
     pricePerShare: z.number().gt(0, ({

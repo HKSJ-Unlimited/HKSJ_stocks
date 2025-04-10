@@ -16,6 +16,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import AddTransaction from "@/components/AddTransaction";
+import { Toaster } from "@/components/ui/toaster"
 
 const SidebarItems = [
   {
@@ -106,6 +107,7 @@ export default function DashboardLayout({
       <div className="p-2 mt-10 mx-2 flex w-full h-full">
         {children}
         <AddTransaction />
+        <Toaster />
       </div>
     </div>
   );
