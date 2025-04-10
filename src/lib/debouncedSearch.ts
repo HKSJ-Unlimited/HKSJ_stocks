@@ -1,20 +1,19 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
-const useDebounce = (
-    query: string,
-    cb: (query: string) => Promise<void>,
-    time: number
-) => {
+const useDebounce = (value: string, delay: number) => {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
     useEffect(() => {
-        if (!query) return;
-        const debounce = setTimeout(() => {
-            cb(query).catch((error) => {
-                console.error("Error in debounced callback:", error);
-            });
-        }, time);
+        const handler = setTimeout(() => {
+            setDebouncedValue(value);
+        }, delay);
 
-        return () => clearTimeout(debounce);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [query, time]);
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [value, delay]);
+
+    return debouncedValue;
 };
+
 export default useDebounce;

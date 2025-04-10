@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import { IStocks } from "@/types"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
 import useDebounce from "@/lib/debouncedSearch"
 import { CallAPI } from "@/lib/Client"
@@ -33,13 +33,28 @@ export const SearchStocks = ({ onChange }: {
     const [searchValue, setSearchValue] = useState("");
     const [loading, setLoading] = useState(false)
 
-    useDebounce(
-        searchValue,
-        (query: string) => fetchTickers(query),
-        1000
-    );
+    const debouncedSearchTerm = useDebounce(searchValue, 1000);
+
+    useEffect(() => {
+        async function fetchData() {
+            if (debouncedSearchTerm) {
+                try {
+                    await fetchTickers(debouncedSearchTerm)
+                }
+                catch (error) {
+                    console.log(error)
+                }
+                finally {
+                    setLoading(false)
+                }
+            }
+        }
+        void fetchData();
+    }, [debouncedSearchTerm]);
+
     function seachTicker(value: string) {
-        setLoading(true)
+        setTickers([])
+        setLoading(true);
         setSearchValue(value)
     }
     async function fetchTickers(query: string) {
@@ -53,7 +68,6 @@ export const SearchStocks = ({ onChange }: {
             console.log(result.error)
             setTickers([])
         }
-        setLoading(false)
     }
     return (
         <Popover open={open} onOpenChange={setOpen}>
