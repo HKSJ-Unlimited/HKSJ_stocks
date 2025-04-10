@@ -18,9 +18,8 @@ export async function GET(req: NextRequest) {
             .where(eq(transactions.userId, userId))
 
         if (!userTransactions.length)
-            return NextResponse.json([], { status: 400 })
+            return NextResponse.json([], { status: 200 })
         const res: z.infer<typeof IPositions>[] = [];
-
         const buyTransactions = userTransactions.filter(tx => tx.type === 'buy');
 
         const sellTransactions = userTransactions.filter(tx => tx.type === 'sell');

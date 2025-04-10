@@ -10,13 +10,14 @@ import {
   TableProperties,
 } from "lucide-react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import AddTransaction from "@/components/AddTransaction";
 import { Toaster } from "@/components/ui/toaster"
+import Spinner from "@/components/Spinner";
 
 const SidebarItems = [
   {
@@ -52,7 +53,6 @@ export default function DashboardLayout({
 }) {
   const [expanded, setExpanded] = useState(true);
   const currentRoute = usePathname();
-
   const { data: session } = useSession();
   if (!session?.user) return null;
   const {
@@ -89,26 +89,35 @@ export default function DashboardLayout({
             {expanded ? <ChevronFirst /> : <ChevronLast />}
           </Button>
         </div>
-        {SidebarItems.map((item) => (
-          <Link
-            href={item.route}
-            key={item.id}
-            className={`flex cursor-pointer items-center gap-2 px-4 py-2.5 hover:bg-gray-100 ${item.route.includes(currentRoute) ? "bg-gray-100" : ""}`}
-          >
-            <div>{item.icon}</div>
-            <p
-              className={`text-xs transition-all duration-500 ${expanded ? "max-w-56" : "max-w-0"} flex-wrap overflow-hidden`}
+        {SidebarItems.map((item) => {
+          const isActive = item.route.split("?").find(str => str === currentRoute)
+          return (
+            <Link
+              href={item.route}
+              key={item.id}
+              className={`flex cursor-pointer items-center gap-2 px-4 py-2.5 hover:bg-gray-100 ${isActive ? "bg-gray-100" : ""}`}
             >
-              {item.name}
-            </p>
-          </Link>
-        ))}
+              <div>{item.icon}</div>
+              <p
+                className={`text-xs transition-all duration-500 ${expanded ? "max-w-56" : "max-w-0"} flex-wrap overflow-hidden`}
+              >
+                {item.name}
+              </p>
+            </Link>
+          )
+        })}
       </nav>
-      <div className="p-2 mt-10 mx-2 flex w-full h-full">
-        {children}
-        <AddTransaction />
-        <Toaster />
-      </div>
+      <Suspense fallback={
+        <div className="flex items-center justify-center h-screen w-full">
+          <Spinner size={100} />
+        </div>
+      }>
+        <div className="p-2 mt-10 mx-2 flex w-full h-full">
+          {children}
+          <AddTransaction />
+          <Toaster />
+        </div>
+      </Suspense>
     </div>
   );
 }
