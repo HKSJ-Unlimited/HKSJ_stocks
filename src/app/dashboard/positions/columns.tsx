@@ -21,6 +21,11 @@ export const columns: ColumnDef<z.infer<typeof IPositions>>[] = [
     {
         accessorKey: "daysGain",
         header: ({ column }) => <DataTableColumnHeader column={column} title="Days Gain" />,
+        cell: ({ row }) => {
+            const gain = row.original.daysGain
+            return <span className={parseInt(gain) > 0 ?
+                "text-green-400 font-bold" : "text-red-400 font-bold"}>{gain}</span>
+        }
     },
     {
         accessorKey: "shares",
@@ -41,6 +46,11 @@ export const columns: ColumnDef<z.infer<typeof IPositions>>[] = [
     {
         accessorKey: "unrealizedGain",
         header: ({ column }) => <DataTableColumnHeader column={column} title="Unrealized Gain" />,
+        cell: ({ row }) => {
+            const gain = row.original.unrealizedGain
+            return <span className={parseInt(gain) > 0 ?
+                "text-green-400 font-bold" : "text-red-400 font-bold"}>{gain}</span>
+        }
     }
 
 ]

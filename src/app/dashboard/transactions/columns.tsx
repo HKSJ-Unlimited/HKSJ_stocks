@@ -44,6 +44,13 @@ export const columns: ColumnDef<z.infer<typeof ITransactions>>[] = [
     {
         accessorKey: "type",
         header: ({ column }) => <DataTableColumnHeader column={column} title="Type" />,
+        cell: ({ row }) => {
+            return <div>
+                {row.original.type === "buy" ?
+                    <span className="text-green-400 font-bold">Buy</span> :
+                    <span className="text-red-400 font-bold">Sell</span>}
+            </div>
+        }
     },
     {
         accessorKey: "currentShares",
